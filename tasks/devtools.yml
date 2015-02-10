@@ -1,0 +1,61 @@
+---
+# Build tools
+- name: install build tools
+  apt: name=build-essential state=present
+
+# Repository Tools
+- name: install git
+  apt: name=git state=present
+
+# Language - Nodejs
+- name: NodeJS | Clone
+  #shell: git clone https://github.com/joyent/node.git
+  #shell: cd node
+  #shell: git checkout v0.12.0
+  git: repo=https://github.com/joyent/node.git
+         dest=/tmp/node
+         version={{node_version}}
+
+- name: NodeJS | Configure
+  shell: ./configure  chdir=/tmp/node/
+
+- name: NodeJS | Make
+  shell: make  chdir=/tmp/node/
+
+- name: NodeJS | Inatall
+  shell: sudo make install  chdir=/tmp/node/
+
+# Language - Ruby
+- name: install ruby-full
+  apt: name={{ item }} state=present
+  with_items:
+    - ruby
+
+# PHP - Composer
+- name: Composer | Install
+  shell: >
+    curl -sS https://getcomposer.org/installer | php
+    creates=/usr/local/bin/composer
+
+- name: Composer | Install global
+  shell: >
+    mv composer.phar /usr/local/bin/composer
+    creates=/usr/local/bin/composer
+
+- name: Update Composer to latest version
+  shell: composer self-update
+
+# Bower
+- name: install bower
+  shell: npm install -g bower
+  #npm: name=bower global=yes state=absent
+
+# Sass compiler
+- name: install sass
+  shell: gem install sass
+  #gem: name=sass state=latest
+
+# Compass
+- name: install compass
+  shell: gem install compass
+  #gem: name=compass state=latest

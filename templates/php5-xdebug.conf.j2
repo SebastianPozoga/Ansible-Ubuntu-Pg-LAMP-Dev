@@ -1,0 +1,8 @@
+; Added for xdebug
+zend_extension="/usr/local/php/modules/xdebug.so"
+xdebug.remote_enable=1
+xdebug.remote_handler=dbgp 
+xdebug.remote_mode=req
+xdebug.remote_host=127.0.0.1 
+xdebug.remote_port={{ xdebug_remote_port }}
+xdebug.idekey={{ xdebug_idekey }}

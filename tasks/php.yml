@@ -1,0 +1,7 @@
+---
+- name: install php
+  apt: name={{ item }} state=present
+  with_items:
+    - php5-dev
+    - php5-mcrypt
+    - php-pear

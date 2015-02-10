@@ -1,0 +1,11 @@
+---
+- name: install apache
+  #apt: name=php5-xdebug state=present
+  shell: pecl install xdebug
+
+- name: Add xdebug config
+  template:
+    src=php5-xdebug.conf.j2
+    dest=/etc/php5/conf.d/php5-xdebug.conf
+  notify:
+    - reload apache

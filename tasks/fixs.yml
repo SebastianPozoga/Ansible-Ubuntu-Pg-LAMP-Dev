@@ -1,0 +1,14 @@
+---
+- name: Dependencies for MySQL
+  apt: name={{ item }} state=present
+  with_items:
+    - mysql-common
+    - libmysqlclient18
+    - python-mysqldb
+
+- name: Dependencies for PgSQL
+  apt: name={{ item }} state=present
+  with_items:
+    - postgresql
+    - libpq-dev
+    - python-psycopg2
