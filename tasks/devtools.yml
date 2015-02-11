@@ -7,23 +7,39 @@
 - name: install git
   apt: name=git state=present
 
+# PHP - Composer
+- name: Composer | Clone
+  shell: cp /sources/composer_installer.php /tmp/
+
+- name: Composer | Build
+  shell: php composer_installer.php  chdir=/tmp/
+
+- name: Composer | Install
+  shell: >
+    mv /tmp/composer.phar /usr/local/bin/composer
+    creates=/usr/local/bin/composer
+
+- name: Composer | Update
+  shell: composer self-update
+
 # Language - Nodejs
 - name: NodeJS | Clone
   #shell: git clone https://github.com/joyent/node.git
   #shell: cd node
   #shell: git checkout v0.12.0
-  git: repo=https://github.com/joyent/node.git
-         dest=/tmp/node
-         version={{node_version}}
+  #git: repo=https://github.com/joyent/node.git
+  #       dest=/tmp/node
+  #       version={{node_version}}
+  shell: cp /sources/nodejs /tmp/nodejs/ -R
 
 - name: NodeJS | Configure
-  shell: ./configure  chdir=/tmp/node/
+  shell: ./configure  chdir=/tmp/nodejs/
 
 - name: NodeJS | Make
-  shell: make  chdir=/tmp/node/
+  shell: make  chdir=/tmp/nodejs/
 
 - name: NodeJS | Inatall
-  shell: sudo make install  chdir=/tmp/node/
+  shell: sudo make install  chdir=/tmp/nodejs/
 
 # Language - Ruby
 - name: install ruby-full
@@ -31,31 +47,14 @@
   with_items:
     - ruby
 
-# PHP - Composer
-- name: Composer | Install
-  shell: >
-    curl -sS https://getcomposer.org/installer | php
-    creates=/usr/local/bin/composer
-
-- name: Composer | Install global
-  shell: >
-    mv composer.phar /usr/local/bin/composer
-    creates=/usr/local/bin/composer
-
-- name: Update Composer to latest version
-  shell: composer self-update
-
 # Bower
 - name: install bower
   shell: npm install -g bower
-  #npm: name=bower global=yes state=absent
 
 # Sass compiler
 - name: install sass
   shell: gem install sass
-  #gem: name=sass state=latest
 
 # Compass
 - name: install compass
   shell: gem install compass
-  #gem: name=compass state=latest
