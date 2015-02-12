@@ -5,3 +5,4 @@
     - php5-dev
     - php5-mcrypt
     - php-pear
+    - php5-curl

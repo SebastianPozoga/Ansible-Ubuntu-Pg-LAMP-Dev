@@ -57,4 +57,4 @@
 
 # Compass
 - name: install compass
-  shell: gem install compass
+  shell: npm install compass

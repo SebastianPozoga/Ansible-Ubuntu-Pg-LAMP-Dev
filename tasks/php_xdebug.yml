@@ -3,6 +3,9 @@
   #apt: name=php5-xdebug state=present
   shell: pecl install xdebug
 
+- name: Creates php global config directory
+  file: path=/etc/php5/conf.d state=directory
+
 - name: Add xdebug config
   template:
     src=php5-xdebug.conf.j2

@@ -15,10 +15,12 @@
     - name: update apt cache
       apt: update_cache=yes
     # Databases
-    #- include: tasks/mysql.yml
-    #- include: tasks/pgsql.yml
+    - include: tasks/mysql.yml
+    - include: tasks/pgsql.yml
     # Servers
-    #- include: tasks/apache.yml
+    - include: tasks/apache.yml
     - include: tasks/php.yml
+    - include: tasks/php_xdebug.yml
     # Devtools
     - include: tasks/devtools.yml
+    
