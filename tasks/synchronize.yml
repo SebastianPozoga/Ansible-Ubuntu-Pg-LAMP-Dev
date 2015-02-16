@@ -1,0 +1,7 @@
+---
+# Synchronize local and remote files
+- name: Synchronize | Global WWW directory
+  synchronize: src=remote/var/www/ dest=/var/www/
+
+- name: Synchronize | Apache config
+  synchronize: src=remote/etc/apache2/sites-enabled/ dest=/etc/apache2/sites-enabled/

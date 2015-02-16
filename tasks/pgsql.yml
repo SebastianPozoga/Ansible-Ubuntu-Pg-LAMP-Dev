@@ -1,27 +1,73 @@
 ---
-- name: install postgresql
+- name: PostgreSQL | Install libraries
   apt: name={{ item }} state=present
   with_items:
+    # build
+    - build-essential
+    - libreadline-dev
+    - zlib1g-dev
+    - flex
+    - bison
+    - libxml2-dev
+    - libxslt-dev
+    - libssl-dev
+    - make
+    # ansible remote control modules
     - libpq-dev
     - python-psycopg2
-    - postgresql
 
-#- name: Make sure its running
-#  service: name=postgresql state=started enabled=yes
+- name: PostgreSQL | Decompression
+  shell: tar -zxvf /sources/postgres.tar.gz -C /
 
-- name: start postgresql
-  service: name=postgresql state=started
+- name: PostgreSQL | Move to tmp
+  command: mv /sources/postgres /tmp/postgres
 
-- lineinfile: dest=/etc/postgresql/9.3/main/pg_hba.conf
-              regexp='local\s+all\s+postgres\s+peer'
-              line='local all postgres trust'
-              insertbefore=BOF
-  notify: restart postgresql
+- name: PostgreSQL | Configure
+  shell: ./configure  chdir=/tmp/postgres/
 
-- name: restart postgresql
-  service: name=postgresql state=restarted
+- name: PostgreSQL | Make
+  shell: make  chdir=/tmp/postgres/
 
-- name: create pgsql user
+- name: PostgreSQL | Inatall
+  shell: make install  chdir=/tmp/postgres/
+
+- name: PostgreSQL | Add system service
+  shell: cp /tmp/postgres/contrib/start-scripts/linux /etc/init.d/postgres
+
+- name: PostgreSQL | Make service executable
+  shell: chmod +x  /etc/init.d/postgres
+
+- name: PostgreSQL | Add paths
+  template:
+    src=etc/profile.d/postgres.sh
+    dest=/etc/profile.d/postgres.sh
+  notify:
+    - reload apache
+
+- name: PostgreSQL | Load paths
+  shell: bash /etc/profile.d/postgres.sh
+
+- name: PostgreSQL | Create postgres user
+  user: name=postgres
+
+- name: PostgreSQL | Create data directory
+  shell: mkdir /usr/local/pgsql/data -p
+
+- name: PostgreSQL | Set owner of data directory
+  shell: chown postgres:postgres /usr/local/pgsql/data
+
+- name: PostgreSQL | Initialize data directory
+  shell: /usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data/
   sudo: yes
-  postgresql_user: name="{{ pgsql_username }}"  password="{{pgsql_password}}" role_attr_flags=NOSUPERUSER,CREATEDB
-  notify: restart postgresql
+  sudo_user: postgres
+
+- name: PostgreSQL | Start service
+  shell: service postgres start
+
+- name: PostgreSQL | Start service on boot
+  shell: sudo update-rc.d postgres defaults
+
+- name: PostgreSQL | Create user
+  shell: /usr/local/pgsql/bin/psql -c "CREATE ROLE {{pgsql_username}} LOGIN PASSWORD '{{pgsql_password}}' SUPERUSER CREATEDB CREATEROLE;"
+  sudo: yes
+  sudo_user: postgres

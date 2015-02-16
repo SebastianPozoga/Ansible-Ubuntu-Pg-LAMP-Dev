@@ -25,8 +25,4 @@ Vagrant.configure(2) do |config|
   end
 
 
-  # OPTIONAL:
-  # Sync folder by vagrant - I use ansible
-  config.vm.synced_folder "sources", "/sources"
-
 end

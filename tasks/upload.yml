@@ -1,0 +1,4 @@
+---
+# Upload data to build
+- name: Upload | All files for build
+  copy: src=sources dest=/
