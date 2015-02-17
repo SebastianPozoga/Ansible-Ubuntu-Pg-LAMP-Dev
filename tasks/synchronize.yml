@@ -1,7 +1,12 @@
 ---
-# Synchronize local and remote files
-- name: Synchronize | Global WWW directory
-  synchronize: src=remote/var/www/ dest=/var/www/
+- name: Synchronize | Install
+  apt: name={{ item }} state=present
+  with_items:
+    - rsync
 
-- name: Synchronize | Apache config
-  synchronize: src=remote/etc/apache2/sites-enabled/ dest=/etc/apache2/sites-enabled/
+# Synchronize local and files files
+#- name: Synchronize | Global WWW directory
+#  synchronize: src=files/var/www/ dest=/var/www/ rsync_path="sudo rsync"
+
+#- name: Synchronize | Apache config
+#  synchronize: src=files/etc/apache2/sites-enabled/ dest=/etc/apache2/sites-enabled/ rsync_path="sudo rsync"

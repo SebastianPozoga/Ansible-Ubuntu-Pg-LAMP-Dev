@@ -12,7 +12,7 @@
     - libxslt-dev
     - libssl-dev
     - make
-    # ansible remote control modules
+    # ansible files control modules
     - libpq-dev
     - python-psycopg2
 

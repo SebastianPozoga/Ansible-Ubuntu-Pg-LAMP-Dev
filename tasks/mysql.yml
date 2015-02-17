@@ -6,12 +6,7 @@
     - libmysqlclient18
     - python-mysqldb
 
-- name: fix mysql add user by the python mysqldb module is required
-  apt: name=mysql-common state=present
-  apt: name=libmysqlclient18 state=present
-  apt: name=python-mysqldb state=present
-
-#- name: create mysql user
-#  mysql_user: name="{{mysql_username}}" password="{{mysql_password}}" priv=*.*:ALL state=present
+- name: create mysql user
+  mysql_user: name="{{mysql_username}}" password="{{mysql_password}}" priv=*.*:ALL state=present
 
 

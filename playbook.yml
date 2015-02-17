@@ -12,10 +12,11 @@
       service: name=postgresql state=restarted
 
   tasks:
+    #Sync data
+    - include: tasks/synchronize.yml
     # Add repositories
     - name: update apt cache
       apt: update_cache=yes
-
     # Upload data
     - include: tasks/upload.yml
     # Databases
@@ -27,5 +28,3 @@
     - include: tasks/php_xdebug.yml
     # Devtools
     - include: tasks/devtools.yml
-    #Sync data
-    - include: tasks/synchronize.yml

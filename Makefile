@@ -2,9 +2,11 @@ all: clean download mkdir
 
 download: download-pgsql download-composer download-nodejs
 
+
 mkdir:
-    mkdir -p remote/var/www
-    mkdir -p remote/etc/apache2/sites-enable
+	mkdir -p files/var/www
+	mkdir -p files/etc/apache2/sites-enable
+
 
 download-pgsql:
 	# PgSQL
@@ -12,9 +14,11 @@ download-pgsql:
 	tar -zcvf sources/postgres.tar.gz sources/postgres/
 	rm -Rf sources/postgres
 
+
 download-composer:
 	# Composer
 	wget https://getcomposer.org/installer -O sources/composer_installer.php
+
 
 download-nodejs:
 	# NodeJS
@@ -23,6 +27,7 @@ download-nodejs:
 	tar -zcvf sources/nodejs.tar.gz sources/nodejs/
 	rm sources/nodejs -Rf
 	chmod 777 sources/* -R
+
 
 clean:
     # Clean
