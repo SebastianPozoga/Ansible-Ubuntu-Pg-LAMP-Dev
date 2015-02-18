@@ -1,12 +1,12 @@
 ---
-- name: install mysql
+- name: MySQL | Install
   apt: name={{ item }} state=present
   with_items:
-    - mysql-common
-    - libmysqlclient18
     - python-mysqldb
+    - mysql-server
+    - libmysqlclient18
 
-- name: create mysql user
+- name: MySQL | Create user
   mysql_user: name="{{mysql_username}}" password="{{mysql_password}}" priv=*.*:ALL state=present
 
 

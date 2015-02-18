@@ -24,5 +24,10 @@ Vagrant.configure(2) do |config|
     ansible.playbook = "playbook.yml"
   end
 
+  Vagrant.configure('2') do |config|
+    config.vm.synced_folder "files/var/www", "/var/www"
+    config.vm.synced_folder "files/etc/apache2/sites-enabled", "/etc/apache2/sites-enabled"
+  end
+
 
 end

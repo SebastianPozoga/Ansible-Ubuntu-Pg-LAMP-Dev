@@ -20,8 +20,8 @@
     # Upload data
     - include: tasks/upload.yml
     # Databases
-    - include: tasks/pgsql.yml
     - include: tasks/mysql.yml
+    - include: tasks/pgsql.yml
     # Servers
     - include: tasks/apache.yml
     - include: tasks/php.yml
