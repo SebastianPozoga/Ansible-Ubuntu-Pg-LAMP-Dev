@@ -1,8 +1,29 @@
 ---
-- name: install php
+- name: PHP | Install
   apt: name={{ item }} state=present
   with_items:
     - php5-dev
     - php5-mcrypt
     - php-pear
     - php5-curl
+    - php5-mysql
+    - php5-pgsql
+    - libapache2-mod-php5
+
+#- name: PHP | Install pdo
+#  shell: pecl install pdo
+
+#- name: PHP | Active pod
+#  shell: echo "extension=pdo.so" >> /etc/php5/apache2/conf.d/20-pdo.conf
+
+#- name: PHP | Install pdo_mysql
+#  shell: pecl install pdo_mysql
+
+#- name: PHP | Active pdo_mysql
+#  shell: echo "extension=pdo_mysql.so" >> /etc/php5/apache2/conf.d/20-pdo_mysql.conf
+
+#- name: PHP | Install pdo_pgsql
+#  shell: pecl install pdo_pgsql
+
+#- name: PHP | Active pdo_pgsql
+#  shell: echo "extension=pdo_pgsql.so" >> /etc/php5/apache2/conf.d/20-pgsql.conf

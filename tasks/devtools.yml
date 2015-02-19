@@ -1,10 +1,10 @@
 ---
 # Build tools
-- name: install build tools
+- name: Build Tools | Install
   apt: name=build-essential state=present
 
 # Repository Tools
-- name: install git
+- name: Git | Install
   apt: name=git state=present
 
 # PHP - Composer
@@ -22,16 +22,6 @@
 - name: Composer | Update
   shell: composer self-update
 
-# Language - Nodejs
-#- name: NodeJS | Clone
-  #shell: git clone https://github.com/joyent/node.git
-  #shell: cd node
-  #shell: git checkout v0.12.0
-  #git: repo=https://github.com/joyent/node.git
-  #       dest=/tmp/node
-  #       version={{node_version}}
-  #shell: cp /sources/nodejs /tmp/nodejs/ -R
-
 - name: NodeJS | Decompression
   shell: tar -zxvf /sources/nodejs.tar.gz -C /
 
@@ -48,19 +38,19 @@
   shell: make install  chdir=/tmp/nodejs/
 
 # Language - Ruby
-- name: install ruby-full
+- name: Ruby | Install
   apt: name={{ item }} state=present
   with_items:
     - ruby
 
 # Bower
-- name: install bower
+- name: Bower | Install
   shell: npm install -g bower
 
 # Sass compiler
-- name: install sass
+- name: Sass | Install
   shell: gem install sass
 
 # Compass
-- name: install compass
+- name: Compass | install
   shell: npm install compass
