@@ -47,6 +47,10 @@
 - name: Bower | Install
   shell: npm install -g bower
 
+#grunt
+- name: Grunt | Install
+  shell: npm install -g grunt-cli
+
 # Sass compiler
 - name: Sass | Install
   shell: gem install sass
